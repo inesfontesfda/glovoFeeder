@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic JSON Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic JSON Data</h1>
+    <pre id="json-display">Loading...</pre>
+
+    <script>
+        const jsonUrl = 'https://drive.google.com/uc?export=download&id=1gsQQwtZYE4c2P_-JuWxd6fNQJyASvSrd';
+
+        function fetchJson() {
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('json-display').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('json-display').textContent = 'Failed to load JSON data.';
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+
+        // Fetch JSON data when the page loads
+        window.onload = fetchJson;
+
+        // Fetch JSON data every 60 seconds (60000 milliseconds)
+        setInterval(fetchJson, 60000);
+    </script>
+</body>
+</html>
